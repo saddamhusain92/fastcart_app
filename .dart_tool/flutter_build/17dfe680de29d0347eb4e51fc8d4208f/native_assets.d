@@ -1,0 +1,1 @@
+ C:\\Users\\sadda\\OneDrive\\Desktop\\ecomweb\\fastcart\\.dart_tool\\flutter_build\\17dfe680de29d0347eb4e51fc8d4208f\\native_assets.yaml: 
