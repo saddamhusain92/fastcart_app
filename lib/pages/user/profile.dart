@@ -35,7 +35,6 @@ bool isLoading = true;
   }
   Widget build(BuildContext context) {
           final provider = Provider.of<userProvider>(context);
-          print(provider.getavatar);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -96,11 +95,21 @@ bool isLoading = true;
               )),
 SizedBox(height: 10,),
          Text("Shipping details",style: TextStyle(fontSize:18,fontWeight: FontWeight.w500)),
+     provider.getUpdate?ElevatedButton(
+       style: ElevatedButton.styleFrom(
+                    backgroundColor: darkTheme,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9), // <-- Radius
+                    ),
+                  ),
+      onPressed: (){
+        Navigator.of(context).pushNamed('/update_address');
+      }, child: Text("Update Address",style: TextStyle(color: whiteTheme),)):
         EasyRichText(
               "${provider.getaddress}",
               defaultStyle: TextStyle(color: Colors.black),
               
-            ),
+            )
           ],
         )),
       ));

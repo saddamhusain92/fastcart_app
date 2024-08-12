@@ -1,6 +1,7 @@
 import 'package:fastcart/consts/const.dart';
 import 'package:fastcart/pages/login/login.dart';
 import 'package:fastcart/provider/cart_provider.dart';
+import 'package:fastcart/provider/userProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:fastcart/consts/colors.dart';
@@ -20,9 +21,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CartProvider>(context);
+     final providerUser = Provider.of<userProvider>(context);
     return Scaffold(
 
       appBar:AppBar(
+        leading: currentIndex==2?IconButton(onPressed: (){}, icon:Icon(LucideIcons.user)):null,
         backgroundColor: darkTheme,
         title: TextWidget(lable: "Fastcart",color:whiteTheme),
         actions: [
@@ -47,10 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('John Doe'),
-              accountEmail: Text('johndoe@example.com'),
+              accountName: Text(" ${providerUser.getName}".toUpperCase(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+              accountEmail: Text('${providerUser.getemail}'),
               currentAccountPicture: CircleAvatar(
-                backgroundImage:NetworkImage("https://asset.brandfetch.io/id0HloHs0j/iduo_Gkbmg.jpeg"),
+                backgroundImage:providerUser.getavatar==""?NetworkImage("https://asset.brandfetch.io/id0HloHs0j/iduo_Gkbmg.jpeg"):NetworkImage(providerUser.getavatar),
               radius: 40,
           ),
               decoration: BoxDecoration(

@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 class userProvider with ChangeNotifier {
   String _name = '';
   String _avatar = '';
+  String _email = '';
+  bool _updateMode = false;
  Map<String,dynamic> _mainAddress = {
       "first_name": "",
     "last_name": "",
@@ -25,7 +27,9 @@ class userProvider with ChangeNotifier {
   int _uid = 0;
   String get getName => _name;
   String get getavatar => _avatar;
+  String get getemail => _email;
   String get getaddress => _address;
+  bool get getUpdate => _updateMode;
   Map<String,dynamic> get getmainAddress => _mainAddress;
   int get getuid => _uid;
 
@@ -55,10 +59,13 @@ class userProvider with ChangeNotifier {
     final addressResponse = await http.get(url);
     if (addressResponse.statusCode >= 200 && addressResponse.statusCode < 300) {
       final addressJson = jsonDecode(addressResponse.body);
+         _email = addressJson['email'];
       _mainAddress = addressJson['billing'];
+      _mainAddress['address_1']==""?_updateMode=true:_updateMode=false;
+    
+
       _address =
           "$_name \n${addressJson['billing']['address_1'] + " " + addressJson['billing']['address_1']} \n${addressJson['billing']['city'] + " , Pincode " + addressJson['billing']['postcode'] + " ${addressJson['billing']['state']}  (" + addressJson['billing']['country']})\nmobile ${addressJson['billing']['phone']}";
-      print(_mainAddress);
     } else {
       print(addressResponse.reasonPhrase);
     }

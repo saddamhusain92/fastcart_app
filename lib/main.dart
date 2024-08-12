@@ -5,6 +5,7 @@ import 'package:fastcart/pages/cart/cart_page.dart';
 import 'package:fastcart/pages/login/login.dart';
 import 'package:fastcart/pages/products/products_details.dart';
 import 'package:fastcart/pages/splashscreen/splash_screen.dart';
+import 'package:fastcart/pages/update/address_update.dart';
 import 'package:fastcart/provider/cart_provider.dart';
 import 'package:fastcart/provider/userProvider.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +44,9 @@ class MyApp extends StatelessWidget {
         '/home':(context) => MyHomePage(),
         '/checkout':(context) => Mycheckout(),
         '/cart':(context) => MyCartPage(),
-        // '/':(context) =>isLoggedIn==null?LoginPage(): MyHomePage(),
         '/products':(context) => ProductsPage(),
         '/products_details':(context) => ProductDetails(),
+        '/update_address':(context) => MyAddress(),
         
       },
       theme: ThemeData(

@@ -144,8 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                             ), // background
                           ),
                           onPressed: () async {
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
+                          Navigator.of(context).pushNamed('/home');
 
                             
                           },

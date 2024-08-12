@@ -5,6 +5,7 @@ import 'package:fastcart/consts/colors.dart';
 import 'package:fastcart/consts/config.dart';
 import 'package:fastcart/consts/const.dart';
 import 'package:fastcart/provider/cart_provider.dart';
+import 'package:fastcart/provider/userProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -20,7 +21,7 @@ class MyCartPage extends StatefulWidget {
 
 class _MyCartPageState extends State<MyCartPage> {
   
-    void checkoutProduct(List<Map<String, dynamic>> cartItems) async {
+    void checkoutProduct(List<Map<String, dynamic>> cartItems,Map<String, dynamic> address) async {
      
     var headersList = {'Accept': '*/*', 'Content-Type': 'application/json'};
     var url = Uri.parse(
@@ -30,18 +31,7 @@ class _MyCartPageState extends State<MyCartPage> {
       "payment_method": "bacs",
       "payment_method_title": "Cash on delivery",
       "set_paid": true,
-      "billing": {
-        "first_name": "John",
-        "last_name": "Doe",
-        "address_1": "969 Market",
-        "address_2": "",
-        "city": "San Francisco",
-        "state": "CA",
-        "postcode": "94103",
-        "country": "US",
-        "email": "john.doe@example.com",
-        "phone": "(555) 555-5555"
-      },
+      "billing": address,
       "shipping": {
         "first_name": "John",
         "last_name": "Doe",
@@ -76,7 +66,7 @@ class _MyCartPageState extends State<MyCartPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CartProvider>(context);
-    final useprovider = Provider.of<CartProvider>(context);
+    final useprovider = Provider.of<userProvider>(context);
     return Scaffold(
       appBar: AppBar
         (title: Text("My Cart"),
@@ -241,7 +231,16 @@ class _MyCartPageState extends State<MyCartPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("${provider.totalAmount}",style: TextStyle(fontSize:18,fontWeight: FontWeight.bold),),
-                       ElevatedButton(
+                     useprovider.getUpdate?ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                    backgroundColor: darkTheme,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5), // <-- Radius
+                    ),
+                  ),  
+                      onPressed: (){
+                         Navigator.of(context).pushNamed('/update_address');
+                      }, child: Text("Address Update",style: TextStyle(color: Colors.white,fontSize: 18),)):ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: darkTheme,
                     shape: RoundedRectangleBorder(
@@ -249,7 +248,7 @@ class _MyCartPageState extends State<MyCartPage> {
                     ),
                   ),
                   onPressed: (){
-                        checkoutProduct(provider.cartItems);
+                        checkoutProduct(provider.cartItems,useprovider.getmainAddress);
                         new Future.delayed(const Duration(seconds: 2), () => provider.clearCart());
                   },
                   child: Text(
